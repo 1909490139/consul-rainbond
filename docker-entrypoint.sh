@@ -77,7 +77,7 @@ if [ "$1" = 'agent' ]; then
             $CONSUL_BIND \
             -server \
             -node=${HOSTNAME} \
-            $CONSUL_CLIENT
+            -join="${SERVICE_NAME}-0.${SERVICE_NAME}"
     fi
 elif [ "$1" = 'version' ]; then
     # This needs a special case because there's no help output.
