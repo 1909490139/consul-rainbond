@@ -68,7 +68,7 @@ if [ "$1" = 'agent' ]; then
             -bootstrap \
             -ui \
             -node=${HOSTNAME} \
-            $CONSUL_CLIENT
+            -client='0.0.0.0'
     else
         shift
         set -- consul agent \
