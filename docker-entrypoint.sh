@@ -58,13 +58,27 @@ fi
 
 # Look for Consul subcommands.
 if [ "$1" = 'agent' ]; then
-    shift
-    set -- consul agent \
-        -data-dir="$CONSUL_DATA_DIR" \
-        -config-dir="$CONSUL_CONFIG_DIR" \
-        $CONSUL_BIND \
-        $CONSUL_CLIENT \
-        "$@"
+    if [ "${HOSTNAME#*-}" = '0' ];then
+        shift
+        set -- consul agent \
+            -data-dir="$CONSUL_DATA_DIR" \
+            -config-dir="$CONSUL_CONFIG_DIR" \
+            $CONSUL_BIND \
+            -server \
+            -bootstrap \
+            -ui \
+            -node=${HOSTNAME} \
+            $CONSUL_CLIENT
+    else
+        shift
+        set -- consul agent \
+            -data-dir="$CONSUL_DATA_DIR" \
+            -config-dir="$CONSUL_CONFIG_DIR" \
+            $CONSUL_BIND \
+            -server \
+            -node=${HOSTNAME} \
+            $CONSUL_CLIENT
+    fi
 elif [ "$1" = 'version' ]; then
     # This needs a special case because there's no help output.
     set -- consul "$@"
