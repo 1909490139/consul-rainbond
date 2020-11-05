@@ -76,7 +76,9 @@ if [ "$1" = 'agent' ]; then
             -config-dir="$CONSUL_CONFIG_DIR" \
             $CONSUL_BIND \
             -server \
+            -ui \
             -node=${HOSTNAME} \
+            -client='0.0.0.0' \
             -join="${SERVICE_NAME}-0.${SERVICE_NAME}"
     fi
 elif [ "$1" = 'version' ]; then
